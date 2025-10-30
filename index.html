@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Preços Robux</title>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a; 
+            color: #e0e0e0; 
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #00e676; 
+            padding: 30px 20px;
+            background-color: #0d0d0d; 
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00e676;
+        }
+
+        /* Contêiner principal Flexbox */
+        .hubs-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; 
+            gap: 20px; 
+            max-width: 1000px;
+            margin: 0 auto 40px auto;
+            padding: 20px;
+        }
+
+        /* Estilo para cada hub/cartão de preço */
+        .hub-item {
+            background-color: #2c2c2c; 
+            width: calc(50% - 30px); 
+            padding: 25px 20px 65px 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); 
+            transition: transform 0.3s ease, background-color 0.3s ease; 
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: left;
+            border: 2px solid transparent;
+            position: relative; 
+        }
+
+        .hub-item:hover {
+            background-color: #3a3a3a;
+            transform: translateY(-5px); 
+            border-color: #00e676; 
+        }
+        
+        /* Estilos específicos para o conteúdo interno */
+        .robux-value {
+            font-size: 1.8em; 
+            color: #00bcd4; 
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .price-value {
+            font-size: 1.4em; 
+            color: #00e676; 
+            font-weight: 600;
+            display: block;
+        }
+
+        .hub-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            padding: 0; 
+        }
+
+        /* Botão de Comprar */
+        .buy-button {
+            position: absolute; 
+            bottom: 20px; 
+            right: 20px; 
+            background-color: #007bff; 
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px; 
+            text-decoration: none; 
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            border: none; 
+            cursor: pointer;
+        }
+
+        .buy-button:hover {
+            background-color: #0056b3; 
+        }
+
+        /* CSS DO MODAL (O NOVO HUB) */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); 
+            z-index: 1000; 
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* O Hub/Modal em si */
+        .modal-content {
+            background-color: #2c2c2c;
+            padding: 30px;
+            border-radius: 20px; 
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            position: relative;
+            text-align: left;
+        }
+
+        /* Mensagem de OBS */
+        .modal-header {
+            background-color: #00bcd4; 
+            color: #1a1a1a;
+            padding: 15px;
+            margin: -30px -30px 20px -30px; 
+            border-top-left-radius: 20px; 
+            border-top-right-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        
+        /* Campo de Copiar */
+        .copy-container {
+            display: flex;
+            align-items: center;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #00e676;
+        }
+
+        #copy-input {
+            flex-grow: 1;
+            background: none;
+            border: none;
+            color: #00e676; 
+            font-size: 1em;
+            font-family: monospace;
+            cursor: default;
+        }
+
+        .copy-btn {
+            background-color: #00e676;
+            color: #1a1a1a;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: #00c853;
+        }
+
+        /* Botão Fechar */
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            font-size: 25px;
+            font-weight: bold;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #ff5252;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hub-item {
+                width: calc(100% - 20px); 
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>💎 Tabela de Robux 💎</h1>
+    </header>
+
+    <div class="hubs-container">
+        
+        <div class="hub-item">
+            <a href="#" target="_blank" class="hub-link">
+                <span class="robux-value">500 Robux</span>
+                <span class="price-value">R$ 30,00</span>
+            </a>
+            <button class="buy-button" onclick="openModal()">Comprar</button>
+        </div>
+
+        <div class="hub-item">
+            <a href="#" target="_blank" class="hub-link">
+                <span class="robux-value">1.200 Robux</span>
+                <span class="price-value">R$ 65,00</span>
+            </a>
+            <button class="buy-button" onclick="openModal()">Comprar</button>
+        </div>
+        
+        <div class="hub-item">
+            <a href="#" target="_blank" class="hub-link">
+                <span class="robux-value">1.700 Robux</span>
+                <span class="price-value">R$ 85,00</span>
+            </a>
+            <button class="buy-button" onclick="openModal()">Comprar</button>
+        </div>
+        
+        <div class="hub-item">
+            <a href="#" target="_blank" class="hub-link">
+                <span class="robux-value">2.100 Robux</span>
+                <span class="price-value">R$ 110,00</span>
+            </a>
+            <button class="buy-button" onclick="openModal()">Comprar</button>
+        </div>
+        
+        <div class="hub-item">
+            <a href="#" target="_blank" class="hub-link">
+                <span class="robux-value">3.600 Robux</span>
+                <span class="price-value">R$ 175,00</span>
+            </a>
+            <button class="buy-button" onclick="openModal()">Comprar</button>
+        </div>
+        
+        <div class="hub-item">
+            <a href="#" target="_blank" class="hub-link">
+                <span class="robux-value">4.500 Robux</span>
+                <span class="price-value">R$ 215,00</span>
+            </a>
+            <button class="buy-button" onclick="openModal()">Comprar</button>
+        </div>
+        
+        <div class="hub-item">
+            <a href="#" target="_blank" class="hub-link">
+                <span class="robux-value">7.000 Robux</span>
+                <span class="price-value">R$ 340,00</span>
+            </a>
+            <button class="buy-button" onclick="openModal()">Comprar</button>
+        </div>
+        
+        <div class="hub-item">
+            <a href="#" target="_blank" class="hub-link">
+                <span class="robux-value">10.000 Robux</span>
+                <span class="price-value">R$ 480,00</span>
+            </a>
+            <button class="buy-button" onclick="openModal()">Comprar</button>
+        </div>
+        
+    </div>
+
+    <footer>
+        <p style="color: #666; margin-top: 40px;">© 2023 Tabela de Robux. Todos os direitos reservados.</p>
+    </footer>
+
+    <div id="buyModal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                OBS: compre aqui e entre em nossa discord e abra um ticket e envie o comprovante lá e espere seus robux caírem
+            </div>
+            
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+
+            <p style="margin-bottom: 5px;">Código para Comprovante:</p>
+
+            <div class="copy-container">
+                <input type="text" id="copy-input" value="f78da2db-9e1b-480a-b30c-29d1a4fa0903" readonly>
+                <button class="copy-btn" onclick="copyToClipboard()">Copiar</button>
+            </div>
+            <p id="copy-message" style="color: #00e676; font-size: 0.9em; margin-top: 10px; display: none;">Copiado com sucesso!</p>
+
+        </div>
+    </div>
+    
+    <script>
+        const modal = document.getElementById('buyModal');
+        const copyInput = document.getElementById('copy-input');
+        const copyMessage = document.getElementById('copy-message');
+
+        // Função para abrir o Modal
+        function openModal() {
+            modal.style.display = 'flex';
+        }
+
+        // Função para fechar o Modal
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Função para fechar o Modal ao clicar no overlay (fundo)
+        function closeModalOnOverlay(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Função para copiar o texto para a área de transferência
+        function copyToClipboard() {
+            // Seleciona o campo de texto
+            copyInput.select();
+            copyInput.setSelectionRange(0, 99999); 
+
+            // Copia o texto 
+            navigator.clipboard.writeText(copyInput.value).then(() => {
+                // Mostra a mensagem de sucesso
+                copyMessage.style.display = 'block';
+                // Oculta a mensagem após 3 segundos
+                setTimeout(() => {
+                    copyMessage.style.display = 'none';
+                }, 3000);
+            }).catch(err => {
+                console.error('Falha ao copiar:', err);
+                alert('Erro ao copiar o código. Tente selecionar e copiar manualmente.');
+            });
+        }
+    </script>
+</body>
+</html>
